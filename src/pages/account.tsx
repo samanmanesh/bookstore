@@ -62,7 +62,7 @@ const Account = () => {
     setLocalData({ ...localData, [e.target.name]: e.target.value });
   };
 
-  const updateProfile = () => {
+  const onClickUpdateProfile = () => {
     if (localData.firstName === "") {
       alert("Please enter first name");
       return;
@@ -70,7 +70,7 @@ const Account = () => {
     if (localData.lastName === "") {
       alert("Please enter last name");
     }
-    distpatch(updateProfile(localData))
+    dispatch(updateProfile(localData))
   };
 
   return (
@@ -108,7 +108,7 @@ const Account = () => {
           ))}
           <button
             className="bg-gray-700 text-white rounded p-4 mt-16"
-            onClick={updateProfile}
+            onClick={onClickUpdateProfile}
           >
             Update Profile
           </button>
