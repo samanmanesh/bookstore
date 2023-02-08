@@ -2,9 +2,9 @@ import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
 
-function Header() {
+function Header()  {
   const currentPath = useRouter().pathname;
-  console.log("current path", currentPath);
+  // console.log("current path", currentPath);
   return (
     <div className="sticky top-0 inset-x-0   flex  px-16 py-4 justify-between place-items-center text-lg  font-medium  ">
       <ul className="flex justify-items-center justify-evenly space-x-8 ">
