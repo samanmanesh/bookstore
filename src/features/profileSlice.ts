@@ -1,5 +1,5 @@
-import { RootState } from "@/app/store";
-import { createSlice } from "@reduxjs/toolkit";
+import { RootState , AppDispatch} from "@/app/store";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ProfileState {
   firstName: string;
@@ -23,7 +23,7 @@ export const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    updateProfile : (state, action) => {
+    updateProfile : (state, action : PayloadAction<ProfileState> ) => {
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
       state.email = action.payload.email;
