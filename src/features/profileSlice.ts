@@ -6,7 +6,7 @@ export interface ProfileState {
   lastName: string;
   email: string;
   phone: string;
-  blingStatus: string;
+  billingStatus: string;
   profileImage: string;
 }
 
@@ -15,21 +15,30 @@ const initialState: ProfileState = {
   lastName: "Manesh",
   email: "",
   phone: "",
-  blingStatus: "active",
+  billingStatus: "active",
   profileImage: "",
 }
 
 export const profileSlice = createSlice({
   name: "profile",
-  initialState,
+  initialState : {
+    status: 'idle',
+    error: null,
+    data : initialState
+  },
   reducers: {
     updateProfile : (state, action : PayloadAction<ProfileState> ) => {
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
-      state.email = action.payload.email;
-      state.phone = action.payload.phone;
-      state.blingStatus = action.payload.blingStatus;
-      state.profileImage = action.payload.profileImage;
+      console.log('state>>', state)
+      console.log('action>>', action)
+      state.data = action.payload;
+      state.status = 'success';
+      state.error = null;
+      // state.firstName = action.payload.firstName;
+      // state.lastName = action.payload.lastName;
+      // state.email = action.payload.email;
+      // state.phone = action.payload.phone;
+      // state.billingStatus = action.payload.billingStatus;
+      // state.profileImage = action.payload.profileImage;
     }
   },
 });

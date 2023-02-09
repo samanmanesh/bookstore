@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -8,14 +8,15 @@ import {
 } from "../features/profileSlice";
 
 const Account = () => {
-  const data = useSelector(selectProfile);
+  const profileState = useSelector(selectProfile);
+  const { data, status, error } = profileState;
   const dispatch = useDispatch();
   const [localData, setLocalData] = useState<ProfileState>({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
-    blingStatus: "",
+    billingStatus: "",
     profileImage: "",
   });
 
@@ -51,28 +52,32 @@ const Account = () => {
     {
       label: "Billing Status",
       name: "billingStatus",
-      value: localData.blingStatus,
+      value: localData.billingStatus,
       placeholder: "Billing Status",
     },
   ];
 
   console.log("profileState", data);
 
-  const filedChange = (e: any) => {
-    setLocalData({ ...localData, [e.target.name]: e.target.value });
+  const onFieldChange = (e: any) => {
+    e.preventDefault();
+    setLocalData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const onClickUpdateProfile = () => {
-    if (localData.firstName === "") {
-      alert("Please enter first name");
-      return;
-    }
-    if (localData.lastName === "") {
-      alert("Please enter last name");
-    }
+  const onClickUpdateProfile = (e: FormEvent) => {
+    e.preventDefault()
+    
+    // if (localData.firstName === "") {
+    //   alert("Please enter first name");
+    //   return;
+    // }
+    // if (localData.lastName === "") {
+    //   alert("Please enter last name");
+    // }
+    console.log("localData before dispatch",localData)
     dispatch(updateProfile(localData))
   };
-
+console.log("localData",localData)
   return (
     <div className="flex place-items-center h-full my-32 px-16 place-content-center space-x-24 ">
       <div className="flex flex-col place-items-center justify-center  ">
@@ -81,10 +86,12 @@ const Account = () => {
             <Image
               src={localData.profileImage}
               alt="S"
+              width={640}
+              height={640}
               className="w-full h-full rounded-full"
             />
           ) : (
-            localData.firstName[0] + localData.lastName[0]
+            data.firstName[0]?.toLocaleUpperCase() + data.lastName[0]?.toLocaleUpperCase()
           )}
         </div>
         <button className="bg-gray-700 text-white rounded p-4 mt-12">
@@ -92,7 +99,7 @@ const Account = () => {
         </button>
       </div>
       <div className=" w-1/3 h-full ">
-        <form className="flex flex-col space-y-8  ">
+        <form onSubmit={onClickUpdateProfile} className="flex flex-col space-y-8  ">
           {formFields.map((field) => (
             <div key={field.label + 1} className="flex items-center justify-between  ">
               <label className="text-lg font-medium">{field.label}</label>
@@ -102,13 +109,13 @@ const Account = () => {
                 name={field.name}
                 value={field.value}
                 placeholder={field.placeholder}
-                onChange={filedChange}
+                onChange={onFieldChange}
               />
             </div>
           ))}
           <button
             className="bg-gray-700 text-white rounded p-4 mt-16"
-            onClick={onClickUpdateProfile}
+            type="submit"
           >
             Update Profile
           </button>
