@@ -73,8 +73,6 @@ const Account = () => {
     }
   }, [picture, save]);
 
-  console.log("profileState", data);
-
   const onFieldChange = (e: any) => {
     e.preventDefault();
     setLocalData((prev) => ({ ...prev, [e.target.name]: e.target.value }));

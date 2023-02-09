@@ -3,15 +3,12 @@ import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectProfile,
-} from "../features/profileSlice";
+import { selectProfile } from "../features/profileSlice";
 
-function Header()  {
+function Header() {
   const currentPath = useRouter().pathname;
   const profileState = useSelector(selectProfile);
 
-  // console.log("current path", currentPath);
   return (
     <div className="sticky top-0 inset-x-0   flex container mx-auto  py-4 justify-between place-items-center text-lg  font-medium  ">
       <ul className="flex justify-items-center justify-evenly space-x-8 ">
@@ -48,19 +45,21 @@ function Header()  {
       </ul>
 
       <div className="flex place-items-center space-x-4">
-        <div>{profileState.data.firstName} {profileState.data.lastName}</div>
+        <div>
+          {profileState.data.firstName} {profileState.data.lastName}
+        </div>
         <Link href="/account">
           <div className="w-12 h-12 rounded-full text-[#EAEBED] bg-[#2E424D] flex place-items-center justify-center text-lg">
-          {profileState.data.profileImage ? (
-                <img
-                  src={profileState.data.profileImage}
-                  alt="profileImage"
-                  className="rounded-full w-full h-full object-cover"
-                />
-              ) : (
-                profileState.data.firstName[0]?.toLocaleUpperCase() +
-                profileState.data.lastName[0]?.toLocaleUpperCase()
-              )}
+            {profileState.data.profileImage ? (
+              <img
+                src={profileState.data.profileImage}
+                alt="profileImage"
+                className="rounded-full w-full h-full object-cover"
+              />
+            ) : (
+              profileState.data.firstName[0]?.toLocaleUpperCase() +
+              profileState.data.lastName[0]?.toLocaleUpperCase()
+            )}
           </div>
         </Link>
       </div>

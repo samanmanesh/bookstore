@@ -19,7 +19,6 @@ const initialState: CartState = {
   totalPrice: 0,
 };
 
-
 type AddToCartAction = {
   id: number;
 };
@@ -62,7 +61,6 @@ export const cartSlice = createSlice({
         return;
       }
     },
-    
 
     //increaseQuantity that just receives the product id and the quantity to add
     increaseQuantity: (state, action: PayloadAction<AddToCartAction>) => {
@@ -122,33 +120,6 @@ export const cartSlice = createSlice({
         return;
       }
     },
-    // removeFromCart: (state, action:PayloadAction<OrderItem> ) => {
-    //   if (action.payload === undefined) {
-    //     state.status = "error";
-    //     state.error = "Error in removing from cart";
-    //     return;
-    //   }
-
-    //   //check if the product is already in the cart
-    //   const index = state.data.item.findIndex(
-    //     (item) => item.product.id === action.payload.product.id
-    //   );
-
-    //   if (index !== -1) {
-    //     state.data.item[index].quantity -= action.payload.quantity;
-    //     state.data.totalQuantity -= action.payload.quantity;
-    //     state.data.totalPrice -=
-    //       action.payload.product.price * action.payload.quantity;
-    //     state.status = "success";
-    //     state.error = null;
-    //     return;
-    //   }
-    //   else {
-    //     state.status = "error";
-    //     state.error = "Error in removing from cart";
-    //     return;
-    //   }
-    // }
   },
 });
 

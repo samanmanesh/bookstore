@@ -8,8 +8,8 @@ export default function Home() {
   return <div className='h-[85vh] '>
     <Canvas className='h-full ' >
       <OrbitControls  enableZoom={false}/>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[-2, 5, 2]} intensity={1.5} />
+      <ambientLight intensity={0.9} />
+      <directionalLight position={[-2, 5, 2]} intensity={1} />
         <Box />
       </Canvas>
 

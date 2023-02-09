@@ -14,7 +14,12 @@ type UseWebcam = {
   closeWebcam: () => void;
   setSave: (save: boolean) => void;
 };
-const UseWebcam = ({ picture, setPicture, closeWebcam, setSave }: UseWebcam) => {
+const UseWebcam = ({
+  picture,
+  setPicture,
+  closeWebcam,
+  setSave,
+}: UseWebcam) => {
   // const [picture, setPicture] = useState('')
   const webcamRef = React.useRef(null);
   const capture = React.useCallback(() => {

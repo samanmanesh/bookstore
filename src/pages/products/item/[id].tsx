@@ -13,9 +13,8 @@ const Item = () => {
   const productId = parseInt(id as string);
   const [quantity, setQuantity] = React.useState(1);
 
-  const  dispatch = useDispatch();
+  const dispatch = useDispatch();
   const cartState = useSelector(selectCart);
-
 
   useEffect(() => {
     const product = products.find(
@@ -24,14 +23,12 @@ const Item = () => {
     setProduct(product);
   }, [id, productId, products]);
 
-  console.log("product", product);
-  console.log("cartState", cartState)
-  const handleAddToCart = ()=> {
-    if( quantity < 1) return;
+  const handleAddToCart = () => {
+    if (quantity < 1) return;
 
-    const action = {product, quantity}
-    dispatch(addToCart(action))
-  }
+    const action = { product, quantity };
+    dispatch(addToCart(action));
+  };
 
   return (
     <div className="container mx-auto grid grid-cols-2 place-items-center my-36">
@@ -75,20 +72,23 @@ const Item = () => {
             {" "}
             <span>Quantity: {quantity}</span>{" "}
             <div className="">
-              <button className="bg-gray-600 text-white text-lg  w-8 h-8 rounded-lg"
-              onClick={ () => (quantity >= 1 && setQuantity( prev=> prev - 1))}
+              <button
+                className="bg-gray-600 text-white text-lg  w-8 h-8 rounded-lg"
+                onClick={() => quantity >= 1 && setQuantity((prev) => prev - 1)}
               >
                 -
               </button>{" "}
-              <button className="bg-gray-600 text-white text-lg  w-8 h-8 rounded-lg "
-              onClick={ ()=> (quantity < 10) && setQuantity(prev => prev + 1) }
+              <button
+                className="bg-gray-600 text-white text-lg  w-8 h-8 rounded-lg "
+                onClick={() => quantity < 10 && setQuantity((prev) => prev + 1)}
               >
                 +
               </button>
             </div>
           </div>
         </div>
-        <button className=" w-full bg-sky-600 text-white text-lg p-4 rounded-lg "
+        <button
+          className=" w-full bg-sky-600 text-white text-lg p-4 rounded-lg "
           onClick={handleAddToCart}
         >
           Add to Cart
@@ -99,26 +99,3 @@ const Item = () => {
 };
 
 export default Item;
-
-
-// const cartItem = {
-  //   id: product.id,
-  //   title: product.title,
-  //   price: product.price,
-  //   quantity: quantity,
-  //   image: product.image,
-  // };
-  // const cart = localStorage.getItem("cart");
-  // if (cart) {
-  //   const cartItems = JSON.parse(cart);
-  //   const item = cartItems.find((item: any) => item.id === cartItem.id);
-  //   if (item) {
-  //     item.quantity += cartItem.quantity;
-  //     localStorage.setItem("cart", JSON.stringify(cartItems));
-  //   } else {
-  //     cartItems.push(cartItem);
-  //     localStorage.setItem("cart", JSON.stringify(cartItems));
-  //   }
-  // } else {
-  //   localStorage.setItem("cart", JSON.stringify([cartItem]));
-  // }
