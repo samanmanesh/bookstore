@@ -2,6 +2,8 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import FetchProducts, { Product } from "@/api/products";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart, selectCart } from "@/features/cartSlice";
 
 const Item = () => {
   const router = useRouter();
@@ -9,7 +11,11 @@ const Item = () => {
   const [product, setProduct] = React.useState<any>([]);
   const { id } = router.query;
   const productId = parseInt(id as string);
-  // const [quantity, setQuantity] = React.useState(1);
+  const [quantity, setQuantity] = React.useState(1);
+
+  const  dispatch = useDispatch();
+  const cartState = useSelector(selectCart);
+
 
   useEffect(() => {
     const product = products.find(
@@ -18,16 +24,20 @@ const Item = () => {
     setProduct(product);
   }, [id]);
 
-  console.log(product);
+  console.log("product", product);
+  console.log("cartState", cartState)
+  const handleAddToCart = ()=> {
+    if( quantity < 1) return;
 
-  //tow columns
+    const action = {product, quantity}
+    dispatch(addToCart(action))
+  }
+
   return (
     <div className="container mx-auto grid grid-cols-2 place-items-center my-36">
-      <div
-        className="flex flex-col rounded-xl bg-zinc-300 h-full justify-around "
-      >
+      <div className="flex flex-col rounded-xl bg-zinc-300 h-full justify-around ">
         <h1 className="text-3xl font-bold p-2 m-6">{product?.title}</h1>
-        <div className="p-2 mx-6  flex  gap-6">
+        <div className="p-2 mx-6 flex gap-6">
           <img
             src={product?.authorImage}
             alt={product?.author}
@@ -37,11 +47,12 @@ const Item = () => {
             <span className=" font-medium">{product?.author}</span>
             <span className="font-light">
               {" "}
-             Published Date:  {new Date(product?.dateOfPublication).toDateString()}{" "}
+              Published Date:{" "}
+              {new Date(product?.dateOfPublication).toDateString()}{" "}
             </span>
           </div>
         </div>
-        <p className="text-lg  p-2 m-6">{product?.desc}</p>
+        <p className="text-lg p-2 m-6">{product?.desc}</p>
       </div>
 
       <div className=" rounded-xl h-full bg-red flex flex-col justify-between space-y-10">
@@ -50,7 +61,7 @@ const Item = () => {
           bg-gray-100 shadow-lg  
            "
         >
-          {product.image && (
+          {product?.image && (
             <img
               src={product.image}
               alt={product.title}
@@ -58,11 +69,28 @@ const Item = () => {
             />
           )}
         </div>
-        <div className="space-y-2 ">
-          <p className="text-2xl "> Price: ${product?.price} </p>
-          <p className="text-2xl "> Quantity: 1 </p>
+        <div className="flex flex-col space-y-2 ">
+          <div className="text-2xl "> Price: ${product?.price} </div>
+          <div className="text-2xl flex place-content-between ">
+            {" "}
+            <span>Quantity: {quantity}</span>{" "}
+            <div className="">
+              <button className="bg-gray-600 text-white text-lg  w-8 h-8 rounded-lg"
+              onClick={ () => (quantity >= 1 && setQuantity( prev=> prev - 1))}
+              >
+                -
+              </button>{" "}
+              <button className="bg-gray-600 text-white text-lg  w-8 h-8 rounded-lg "
+              onClick={ ()=> (quantity < 10) && setQuantity(prev => prev + 1) }
+              >
+                +
+              </button>
+            </div>
+          </div>
         </div>
-        <button className=" w-full bg-sky-600 text-white text-lg p-4 rounded-lg "     >
+        <button className=" w-full bg-sky-600 text-white text-lg p-4 rounded-lg "
+          onClick={handleAddToCart}
+        >
           Add to Cart
         </button>
       </div>
@@ -71,3 +99,26 @@ const Item = () => {
 };
 
 export default Item;
+
+
+// const cartItem = {
+  //   id: product.id,
+  //   title: product.title,
+  //   price: product.price,
+  //   quantity: quantity,
+  //   image: product.image,
+  // };
+  // const cart = localStorage.getItem("cart");
+  // if (cart) {
+  //   const cartItems = JSON.parse(cart);
+  //   const item = cartItems.find((item: any) => item.id === cartItem.id);
+  //   if (item) {
+  //     item.quantity += cartItem.quantity;
+  //     localStorage.setItem("cart", JSON.stringify(cartItems));
+  //   } else {
+  //     cartItems.push(cartItem);
+  //     localStorage.setItem("cart", JSON.stringify(cartItems));
+  //   }
+  // } else {
+  //   localStorage.setItem("cart", JSON.stringify([cartItem]));
+  // }

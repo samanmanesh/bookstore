@@ -1,49 +1,66 @@
-import { RootState , AppDispatch} from "@/app/store";
+import { RootState, AppDispatch } from "@/app/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Product } from '@/api/products';
+import { Product } from "@/api/products";
 
-
- export interface OrderItem {
-  product : Product;
-  quantity : number;
+export interface OrderItem {
+  product: Product;
+  quantity: number;
 }
 
 export interface CartState {
-  item : OrderItem[];
-  totalQuantity : number;
-  totalPrice : number;
+  item: OrderItem[];
+  totalQuantity: number;
+  totalPrice: number;
 }
 
 const initialState: CartState = {
-  item : [],
-  totalQuantity : 0,
-  totalPrice : 0
-}
+  item: [],
+  totalQuantity: 0,
+  totalPrice: 0,
+};
 
 export const cartSlice = createSlice({
   name: "cart",
-  initialState : {
-    status: 'idle' as 'idle' | 'loading' | 'success' | 'error',
+  initialState: {
+    status: "idle" as "idle" | "loading" | "success" | "error",
     error: null as string | null,
-    data : initialState
+    data: initialState,
   },
   reducers: {
-    addToCart : (state, action : PayloadAction<OrderItem> ) => {
+    addToCart: (state, action: PayloadAction<OrderItem>) => {
       if (action.payload === undefined) {
-        state.status = 'error';
-        state.error = 'Error in adding to cart';
+        state.status = "error";
+        state.error = "Error in adding to cart";
         return;
       }
-      state.data.item.push(action.payload);
-      state.data.totalQuantity += 1;
-      state.data.totalPrice += action.payload.product.price;
-      state.status = 'success';
-      state.error = null;
-    }
+
+      //check if the product is already in the cart
+      const index = state.data.item.findIndex(
+        (item) => item.product.id === action.payload.product.id
+      );
+
+      if (index !== -1) {
+        state.data.item[index].quantity += action.payload.quantity;
+        state.data.totalQuantity += action.payload.quantity;
+        state.data.totalPrice +=
+          action.payload.product.price * action.payload.quantity;
+        state.status = "success";
+        state.error = null;
+        return;
+      } else {
+        state.data.item.push(action.payload);
+        state.data.totalQuantity += action.payload.quantity;
+        state.data.totalPrice +=
+          action.payload.product.price * action.payload.quantity;
+        state.status = "success";
+        state.error = null;
+        return;
+      }
+    },
   },
 });
 
+export const { addToCart } = cartSlice.actions;
+export const selectCart = (state: RootState) => state.cart;
 
-export const { addToCart} = cartSlice.actions;
-
-
+export default cartSlice.reducer;
