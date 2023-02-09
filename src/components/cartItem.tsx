@@ -2,14 +2,7 @@
 import React,{useState, useEffect} from 'react'
 
 export const CartItem = ({image, title, price, quantity} : {image: string, title: string, price: number, quantity: number } ) => {
-  const [currentQuantity, setCurrentQuantity] = React.useState();
-  
-  
-
-
-
-
-
+ 
 
   return (
     <div
