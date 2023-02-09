@@ -5,6 +5,7 @@ import map1 from "../assets/map1.jpg";
 import author from "../../public/author.jpg";
 import * as THREE from "three";
 import  authorDescription  from "../../public/author-desc.png";
+import { MeshStandardMaterial } from "three";
 
 const Box = () => {
   console.log("authorDescription", authorDescription);
@@ -20,14 +21,14 @@ const Box = () => {
   const [colorMap, displacementMap, normalMap, roughnessMap, aoMap] = useLoader(
     TextureLoader, 
     [
-      "https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss._SX450_.jpg",
-      './author-desc.png',  
-      './author-desc.png',  
-      './author-desc.png',  
-      './author-desc.png',  
-      './author-desc.png',  
+      // "https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss._SX450_.jpg",
+      './author.jpg',
     ]
   );
+  const [colorMap1, displacementMap1, normalMap1, roughnessMap1, aoMap1] =
+  useLoader(TextureLoader, [
+     "./author-desc.png"
+  ]);
 
   return (
     <mesh>
@@ -48,6 +49,35 @@ const Box = () => {
         // roughnessMap={roughnessMap}
         // aoMap={aoMap}
       />
+      <meshStandardMaterial
+        map={colorMap}
+        // displacementMap={displacementMap}
+        // normalMap={normalMap}
+        // roughnessMap={roughnessMap}
+        // aoMap={aoMap}
+      />
+      <meshStandardMaterial
+        map={colorMap}
+        // displacementMap={displacementMap}
+        // normalMap={normalMap}
+        // roughnessMap={roughnessMap}
+        // aoMap={aoMap}
+      />
+      <meshStandardMaterial
+        map={colorMap}
+        // displacementMap={displacementMap}
+        // normalMap={normalMap}
+        // roughnessMap={roughnessMap}
+        // aoMap={aoMap}
+      />
+      <meshStandardMaterial
+        map={colorMap}
+        // displacementMap={displacementMap}
+        // normalMap={normalMap}
+        // roughnessMap={roughnessMap}
+        // aoMap={aoMap}
+      />
+      <meshStandardMaterial map={colorMap1} color="white" />
     </mesh>
   );
 };
