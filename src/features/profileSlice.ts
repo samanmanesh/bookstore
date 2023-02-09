@@ -16,7 +16,7 @@ const initialState: ProfileState = {
   email: "",
   phone: "",
   billingStatus: "active",
-  profileImage: "",
+  profileImage: "https://media.licdn.com/dms/image/D5603AQGYbj7t1sc6xg/profile-displayphoto-shrink_400_400/0/1675472785226?e=1681344000&v=beta&t=oEUo4goBVzqHwgo5SFfWl9lELy11jC0Xpzf-2xIHCd4",
 }
 
 export const profileSlice = createSlice({

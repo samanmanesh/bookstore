@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState, useEffect, FormEvent } from "react";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,7 +18,8 @@ const Account = () => {
     email: "",
     phone: "",
     billingStatus: "",
-    profileImage: "",
+    profileImage:
+      "",
   });
 
   useEffect(() => {
@@ -66,28 +68,27 @@ const Account = () => {
 
   const onFieldChange = (e: any) => {
     e.preventDefault();
-    setLocalData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setLocalData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const onClickUpdateProfile = (e: FormEvent) => {
-    e.preventDefault()
-    dispatch(updateProfile(localData))
+    e.preventDefault();
+    dispatch(updateProfile(localData));
   };
-console.log("localData",localData)
+  console.log("localData", localData);
   return (
     <div className="flex place-items-center h-full my-32 container mx-auto place-content-center space-x-24 ">
       <div className="flex flex-col place-items-center justify-center  ">
         <div className="w-64 h-64 rounded-full text-[#EAEBED] bg-[#2E424D] flex place-items-center justify-center text-4xl text-bold ">
           {localData.profileImage ? (
-            <Image
+            <img
               src={localData.profileImage}
-              alt="S"
-              width={640}
-              height={640}
-              className="w-full h-full rounded-full"
+              alt="profileImage"
+              className="rounded-full w-full h-full object-cover"
             />
           ) : (
-            data.firstName[0]?.toLocaleUpperCase() + data.lastName[0]?.toLocaleUpperCase()
+            data.firstName[0]?.toLocaleUpperCase() +
+            data.lastName[0]?.toLocaleUpperCase()
           )}
         </div>
         <button className="bg-gray-700 text-white rounded p-4 mt-12">
@@ -95,9 +96,15 @@ console.log("localData",localData)
         </button>
       </div>
       <div className=" w-1/3 h-full ">
-        <form onSubmit={onClickUpdateProfile} className="flex flex-col space-y-8  ">
+        <form
+          onSubmit={onClickUpdateProfile}
+          className="flex flex-col space-y-8  "
+        >
           {formFields.map((field) => (
-            <div key={field.label + 1} className="flex items-center justify-between  ">
+            <div
+              key={field.label + 1}
+              className="flex items-center justify-between  "
+            >
               <label className="text-lg font-medium">{field.label}</label>
               <input
                 className="border-2 border-gray-300 rounded p-2 w-2/3"
