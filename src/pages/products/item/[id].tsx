@@ -22,7 +22,7 @@ const Item = () => {
       (product: Product) => product.id === productId
     );
     setProduct(product);
-  }, [id]);
+  }, [id, productId, products]);
 
   console.log("product", product);
   console.log("cartState", cartState)

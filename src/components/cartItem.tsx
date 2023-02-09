@@ -1,12 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
 import React,{useState, useEffect} from 'react'
+import { useSelector, useDispatch } from "react-redux";
+import { increaseQuantity, decreaseQuantity, selectCart, OrderItem } from "@/features/cartSlice";
 
-export const CartItem = ({image, title, price, quantity} : {image: string, title: string, price: number, quantity: number } ) => {
- 
+export const CartItem = ({id, image, title, price, quantity} : {id:number, image: string, title: string, price: number, quantity: number } ) => {
+  // const [stateQuantity, setQuantity] = useState(quantity)
+  const dispatch = useDispatch();
+  const cartState = useSelector(selectCart);
+  const { item: orders ,  } = cartState;
+  const handleIncrease = () => {
+    const action = { id: id};
+    dispatch(increaseQuantity(action));
+  }
+
+  const handleDecrease = () => {
+    const action = {  id:id };
+    dispatch(decreaseQuantity(action));
+  }
 
   return (
     <div
-          className="flex max-w-6xl justify-between shadow p-3 rounded-xl border space-x-10 items-center "
+          className="flex w-4/4 justify-between shadow p-3 rounded-xl border space-x-10 items-center "
         >
           <div
             className="flex flex-col place-items-center justify-center  rounded-lg h-32 w-32 
@@ -35,6 +49,7 @@ export const CartItem = ({image, title, price, quantity} : {image: string, title
                 // onClick={() =>
                 //   stateQuantity < 10 && setQuantity((prev) => prev + 1)
                 // }
+                 onClick={handleIncrease}
               >
                 +
               </button>
@@ -44,6 +59,7 @@ export const CartItem = ({image, title, price, quantity} : {image: string, title
                 // onClick={() =>
                 //   stateQuantity >= 1 && setQuantity((prev) => prev - 1)
                 // }
+                onClick={handleDecrease}
               >
                 -
               </button>

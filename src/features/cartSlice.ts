@@ -19,6 +19,11 @@ const initialState: CartState = {
   totalPrice: 0,
 };
 
+
+type AddToCartAction = {
+  id: number;
+};
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {
@@ -55,9 +60,38 @@ export const cartSlice = createSlice({
         state.status = "success";
         state.error = null;
         return;
-      } 
+      }
     },
-    removeFromCart: (state, action:PayloadAction<OrderItem> ) => {
+    
+
+    //increaseQuantity that just receives the product id and the quantity to add
+    increaseQuantity: (state, action: PayloadAction<AddToCartAction>) => {
+      if (action.payload === undefined) {
+        state.status = "error";
+        state.error = "Error in adding to cart";
+        return;
+      }
+
+      //check if the product is already in the cart
+      const index = state.data.item.findIndex(
+        (item) => item.product.id === action.payload.id
+      );
+
+      if (index !== -1) {
+        state.data.item[index].quantity += 1;
+        state.data.totalQuantity += 1;
+        state.data.totalPrice += state.data.item[index].product.price;
+        state.status = "success";
+        state.error = null;
+        return;
+      } else {
+        state.status = "error";
+        state.error = "Error in adding to cart";
+        return;
+      }
+    },
+    //decreaseQuantity that just receives the product id and the quantity to remove
+    decreaseQuantity: (state, action: PayloadAction<AddToCartAction>) => {
       if (action.payload === undefined) {
         state.status = "error";
         state.error = "Error in removing from cart";
@@ -66,31 +100,60 @@ export const cartSlice = createSlice({
 
       //check if the product is already in the cart
       const index = state.data.item.findIndex(
-        (item) => item.product.id === action.payload.product.id
+        (item) => item.product.id === action.payload.id
       );
 
       if (index !== -1) {
-        state.data.item[index].quantity -= action.payload.quantity;
-        state.data.totalQuantity -= action.payload.quantity;
-        state.data.totalPrice -=
-          action.payload.product.price * action.payload.quantity;
-        state.status = "success";
-        state.error = null;
+        if (state.data.item[index].quantity >= 1) {
+          state.data.item[index].quantity -= 1;
+          state.data.totalQuantity -= 1;
+          state.data.totalPrice -= state.data.item[index].product.price;
+          state.status = "success";
+          state.error = null;
+          return;
+        } else {
+          state.status = "error";
+          state.error = "Error in removing from cart";
+          return;
+        }
+      } else {
+        state.status = "error";
+        state.error = "Error in removing from cart";
         return;
       }
-      return;
+    },
+    // removeFromCart: (state, action:PayloadAction<OrderItem> ) => {
+    //   if (action.payload === undefined) {
+    //     state.status = "error";
+    //     state.error = "Error in removing from cart";
+    //     return;
+    //   }
 
-    }
+    //   //check if the product is already in the cart
+    //   const index = state.data.item.findIndex(
+    //     (item) => item.product.id === action.payload.product.id
+    //   );
 
-    
-    
-    
+    //   if (index !== -1) {
+    //     state.data.item[index].quantity -= action.payload.quantity;
+    //     state.data.totalQuantity -= action.payload.quantity;
+    //     state.data.totalPrice -=
+    //       action.payload.product.price * action.payload.quantity;
+    //     state.status = "success";
+    //     state.error = null;
+    //     return;
+    //   }
+    //   else {
+    //     state.status = "error";
+    //     state.error = "Error in removing from cart";
+    //     return;
+    //   }
+    // }
   },
-  
-  
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, increaseQuantity, decreaseQuantity } =
+  cartSlice.actions;
 export const selectCart = (state: RootState) => state.cart.data;
 
 export default cartSlice.reducer;
