@@ -20,7 +20,7 @@ function Header()  {
         </li>
         <li>
           <Link
-            className={` px-2 py-1  duration-400 ${
+            className={` px-2 py-2  duration-400 ${
               currentPath === "/products" && "border-b-2 border-black  "
             } px-2 py-2 hover:bg-[#2E424D] hover:text-white duration-300 rounded-sm`}
             href="/products"
