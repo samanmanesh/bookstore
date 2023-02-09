@@ -31,9 +31,10 @@ function Products() {
               <h3 className="text-lg font-bold">{product.title}</h3>
             )}
             <h3
-              className="relative opacity-0 group-hover:opacity-100  text-xl font-bold  text-white "
+              className="relative opacity-0 group-hover:opacity-100 text-center p-2  text-xl font-bold  text-white "
             >
-              More
+              {product.title + " - " +
+              '$' + product.price }
             </h3>
           </div>
         </Link>

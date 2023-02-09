@@ -1,5 +1,16 @@
 import React from "react";
 
+export interface Product {
+  id: number;
+  title: string;
+  author: string;
+  desc: string;
+  price: number;
+  image: string;
+  authorImage?: string;
+  dateOfPulication?: string;
+}
+
 export default function FetchProducts() {
   const [products, setProducts] = React.useState([
     {
@@ -10,6 +21,9 @@ export default function FetchProducts() {
       price: 100,
       image:
         "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRkWXbfQrO5oTm1I5izjeRTbQD-vKPnybT24S2kFw2eH8LyyCo5",
+      authorImage:
+        "https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss._SX450_.jpg",
+      dateOfPublication: "1997-06-26",
     },
     {
       id: 2,
@@ -17,8 +31,10 @@ export default function FetchProducts() {
       author: "J.K. Rowling",
       desc: 'Harry Potter and the Chamber of Secrets is the second novel in the Harry Potter series, written by J. K. Rowling. The plot follows Harrys second year at Hogwarts School of Witchcraft and Wizardry, during which a series of messages on the walls of the schools corridors warn that the "Chamber of Secrets" has been opened and that the "heir of Slytherin" would kill all pupils who do not come from all-magical families.',
       price: 150,
-      image:
-        "https://m.media-amazon.com/images/I/61fmfnA-uCL.jpg",
+      image: "https://m.media-amazon.com/images/I/61fmfnA-uCL.jpg",
+      authorImage:
+        "https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss._SX450_.jpg",
+      dateOfPublication: "1998-07-02",
     },
     {
       id: 3,
@@ -28,6 +44,9 @@ export default function FetchProducts() {
       price: 199,
       image:
         "https://kbimages1-a.akamaihd.net/43201e22-f7ab-4c22-8cbe-ac4c63c0d6a0/353/569/90/False/harry-potter-and-the-prisoner-of-azkaban-6.jpg",
+      authorImage:
+        "https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss._SX450_.jpg",
+      dateOfPublication: "1999-07-08",
     },
     {
       id: 4,
@@ -35,8 +54,10 @@ export default function FetchProducts() {
       author: "J.K. Rowling",
       desc: "Harry Potter and the Goblet of Fire is a fantasy novel written by British author J. K. Rowling and the fourth novel in the Harry Potter series. It follows Harry Potter, a wizard in his fourth year at Hogwarts School of Witchcraft and Wizardry, and the mystery surrounding the entry of Harrys name into the Triwizard Tournament, in which he is forced to compete.",
       price: 152,
-      image:
-        "https://m.media-amazon.com/images/I/71kQ4ah1-2L.jpg",
+      image: "https://m.media-amazon.com/images/I/71kQ4ah1-2L.jpg",
+      authorImage:
+        "https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss._SX450_.jpg",
+      dateOfPublication: "2000-07-08",
     },
   ]);
 
