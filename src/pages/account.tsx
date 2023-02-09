@@ -7,19 +7,22 @@ import {
   ProfileState,
   selectProfile,
 } from "../features/profileSlice";
+import UseWebcam from "../tools/useWebcam";
 
 const Account = () => {
   const profileState = useSelector(selectProfile);
   const { data, status, error } = profileState;
   const dispatch = useDispatch();
+  const [picture, setPicture] = useState<string>("");
+  const [isWebcamClose, setIsWebcamClose] = useState<boolean>(true);
+  const [save, setSave] = useState<boolean>(false);
   const [localData, setLocalData] = useState<ProfileState>({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     billingStatus: "",
-    profileImage:
-      "",
+    profileImage: "",
   });
 
   useEffect(() => {
@@ -64,6 +67,12 @@ const Account = () => {
     },
   ];
 
+  useEffect(() => {
+    if (picture !== "" && save) {
+      setLocalData((prev) => ({ ...prev, profileImage: picture }));
+    }
+  }, [picture, save]);
+
   console.log("profileState", data);
 
   const onFieldChange = (e: any) => {
@@ -75,25 +84,41 @@ const Account = () => {
     e.preventDefault();
     dispatch(updateProfile(localData));
   };
-  console.log("localData", localData);
+
   return (
     <div className="flex place-items-center h-full my-32 container mx-auto place-content-center space-x-24 ">
       <div className="flex flex-col place-items-center justify-center  ">
-        <div className="w-64 h-64 rounded-full text-[#EAEBED] bg-[#2E424D] flex place-items-center justify-center text-4xl text-bold ">
-          {localData.profileImage ? (
-            <img
-              src={localData.profileImage}
-              alt="profileImage"
-              className="rounded-full w-full h-full object-cover"
+        {isWebcamClose ? (
+          <>
+            <div className="w-64 h-64 rounded-full text-[#EAEBED] bg-[#2E424D] flex place-items-center justify-center text-4xl text-bold ">
+              {localData.profileImage ? (
+                <img
+                  src={localData.profileImage}
+                  alt="profileImage"
+                  className="rounded-full w-full h-full object-cover"
+                />
+              ) : (
+                data.firstName[0]?.toLocaleUpperCase() +
+                data.lastName[0]?.toLocaleUpperCase()
+              )}
+            </div>
+            <button
+              className="bg-gray-700 text-white rounded p-4 mt-12"
+              onClick={() => setIsWebcamClose(false)}
+            >
+              Update Image
+            </button>
+          </>
+        ) : (
+          <div className=" ">
+            <UseWebcam
+              setPicture={setPicture}
+              picture={picture}
+              closeWebcam={() => setIsWebcamClose(true)}
+              setSave={setSave}
             />
-          ) : (
-            data.firstName[0]?.toLocaleUpperCase() +
-            data.lastName[0]?.toLocaleUpperCase()
-          )}
-        </div>
-        <button className="bg-gray-700 text-white rounded p-4 mt-12">
-          Update Image
-        </button>
+          </div>
+        )}
       </div>
       <div className=" w-1/3 h-full ">
         <form
