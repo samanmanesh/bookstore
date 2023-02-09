@@ -20,7 +20,7 @@ const UseWebcam = ({
   closeWebcam,
   setSave,
 }: UseWebcam) => {
-  // const [picture, setPicture] = useState('')
+  
   const webcamRef = React.useRef(null);
   const capture = React.useCallback(() => {
     if (webcamRef.current) {
