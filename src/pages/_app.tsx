@@ -3,6 +3,7 @@ import "../styles/index.css";
 import Header from "../components/header";
 import { store } from "../app/store";
 import { Provider } from "react-redux";
+import Footer from "@/components/footer";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -12,6 +13,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <Provider store={store}>
           <Header />
           <Component {...pageProps} />
+          {/* <Footer /> */}
         </Provider>
       </div>
     </>

@@ -6,7 +6,7 @@ function Header()  {
   const currentPath = useRouter().pathname;
   // console.log("current path", currentPath);
   return (
-    <div className="sticky top-0 inset-x-0   flex  px-16 py-4 justify-between place-items-center text-lg  font-medium  ">
+    <div className="sticky top-0 inset-x-0   flex container mx-auto  py-4 justify-between place-items-center text-lg  font-medium  ">
       <ul className="flex justify-items-center justify-evenly space-x-8 ">
         <li>
           <Link

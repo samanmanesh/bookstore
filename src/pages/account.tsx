@@ -28,18 +28,21 @@ const Account = () => {
     {
       label: "First Name",
       name: "firstName",
+      type: "text",
       value: localData.firstName,
       placeholder: "First Name",
     },
     {
       label: "Last Name",
       name: "lastName",
+      type: "text",
       value: localData.lastName,
       placeholder: "Last Name",
     },
     {
       label: "Email",
       name: "email",
+      type: "email",
       value: localData.email,
       placeholder: "ex:someone@gmail.com",
     },
@@ -47,12 +50,14 @@ const Account = () => {
       label: "Phone",
       name: "phone",
       value: localData.phone,
+      type: "tel",
       placeholder: "Phone",
     },
     {
       label: "Billing Status",
       name: "billingStatus",
       value: localData.billingStatus,
+      type: "text",
       placeholder: "Billing Status",
     },
   ];
@@ -66,20 +71,11 @@ const Account = () => {
 
   const onClickUpdateProfile = (e: FormEvent) => {
     e.preventDefault()
-    
-    // if (localData.firstName === "") {
-    //   alert("Please enter first name");
-    //   return;
-    // }
-    // if (localData.lastName === "") {
-    //   alert("Please enter last name");
-    // }
-    console.log("localData before dispatch",localData)
     dispatch(updateProfile(localData))
   };
 console.log("localData",localData)
   return (
-    <div className="flex place-items-center h-full my-32 px-16 place-content-center space-x-24 ">
+    <div className="flex place-items-center h-full my-32 container mx-auto place-content-center space-x-24 ">
       <div className="flex flex-col place-items-center justify-center  ">
         <div className="w-64 h-64 rounded-full text-[#EAEBED] bg-[#2E424D] flex place-items-center justify-center text-4xl text-bold ">
           {localData.profileImage ? (
@@ -105,7 +101,7 @@ console.log("localData",localData)
               <label className="text-lg font-medium">{field.label}</label>
               <input
                 className="border-2 border-gray-300 rounded p-2 w-2/3"
-                type="text"
+                type={field.type}
                 name={field.name}
                 value={field.value}
                 placeholder={field.placeholder}

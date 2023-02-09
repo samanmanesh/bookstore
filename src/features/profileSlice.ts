@@ -22,23 +22,20 @@ const initialState: ProfileState = {
 export const profileSlice = createSlice({
   name: "profile",
   initialState : {
-    status: 'idle',
-    error: null,
+    status: 'idle' as 'idle' | 'loading' | 'success' | 'error',
+    error: null as string | null,
     data : initialState
   },
   reducers: {
     updateProfile : (state, action : PayloadAction<ProfileState> ) => {
-      console.log('state>>', state)
-      console.log('action>>', action)
+      if (action.payload === undefined) {
+        state.status = 'error';
+        state.error = 'Error in updating profile';
+        return;
+      }
       state.data = action.payload;
       state.status = 'success';
       state.error = null;
-      // state.firstName = action.payload.firstName;
-      // state.lastName = action.payload.lastName;
-      // state.email = action.payload.email;
-      // state.phone = action.payload.phone;
-      // state.billingStatus = action.payload.billingStatus;
-      // state.profileImage = action.payload.profileImage;
     }
   },
 });
@@ -48,29 +45,4 @@ export const { updateProfile} = profileSlice.actions;
 export const selectProfile = (state: RootState) => state.profile;
 export default profileSlice.reducer;  
     
-
-// setFirstName: (state, action) => {
-//   state.firstName = action.payload;
-// }
-// ,
-// setLastName: (state, action) => {
-//   state.lastName = action.payload;
-// }
-// ,
-// setEmail: (state, action) => {
-//   state.email = action.payload;
-// }
-// ,
-// setPhone: (state, action) => {
-//   state.phone = action.payload;
-// }
-// ,
-// setBlingStatus: (state, action) => {
-//   state.blingStatus = action.payload;
-// }
-// ,
-// setProfileImage: (state, action) => {
-//   state.profileImage = action.payload;
-// }
-
 
